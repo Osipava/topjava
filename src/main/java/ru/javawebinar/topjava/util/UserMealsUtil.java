@@ -5,6 +5,9 @@ import ru.javawebinar.topjava.model.UserMealWithExceed;
 
 import java.time.*;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 /**
@@ -21,33 +24,20 @@ public class UserMealsUtil {
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500),
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
         );
-        getFilteredWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
-//        .toLocalDate();
-//        .toLocalTime();
+         getFilteredWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
 
     }
 
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
 
-        List<UserMealWithExceed> list = new ArrayList<>();
-        HashMap<LocalDate, Integer> mapUserMealPerDay = init(mealList);
+        Map<LocalDate, Integer> mapUserMealPerDay = mealList.stream().collect(
+                Collectors.toMap(i -> i.getDateTime().toLocalDate(), i -> i.getCalories(),(oldCount, newCount) -> oldCount + newCount ));
 
-        for (UserMeal userMeal : mealList) {
-            if (TimeUtil.isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime)) {
-                list.add(new UserMealWithExceed(userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories(), mapUserMealPerDay.getOrDefault(userMeal.getDateTime().toLocalDate(), mapUserMealPerDay.get(userMeal.getDateTime().toLocalDate())) > caloriesPerDay));
-            }
-        }
+        List<UserMealWithExceed> list = mealList.stream().filter(i -> TimeUtil.isBetween(i.getDateTime().toLocalTime(), startTime, endTime))
+                .map(i -> new UserMealWithExceed(i.getDateTime(), i.getDescription(), i.getCalories(), mapUserMealPerDay.get(i.getDateTime().toLocalDate()) > caloriesPerDay))
+                .collect(Collectors.toList());
         return list;
     }
 
 
-    private static HashMap<LocalDate, Integer> init(List<UserMeal> mealList) {
-
-        HashMap<LocalDate, Integer> mapUserMealPerDay = new HashMap<>();
-        for (UserMeal userMeal : mealList) {
-            mapUserMealPerDay.merge(userMeal.getDateTime().toLocalDate(), userMeal.getCalories() ,(value, newValue) -> value+newValue);
-
-        }
-        return mapUserMealPerDay;
-    }
 }
