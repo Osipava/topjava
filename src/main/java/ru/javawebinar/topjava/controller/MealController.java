@@ -18,7 +18,7 @@ public class MealController extends HttpServlet {
     private static String INSERT_OR_EDIT = "/meals.jsp";
     private static String LIST_MEALS = "/listMeal.jsp";
     private MealDao dao = new MealDaoImpl();
-    private int count = dao.getAllMealWithExceeds().size();
+
 
 
     @Override
@@ -57,7 +57,6 @@ public class MealController extends HttpServlet {
         String id = request.getParameter("id");
 
         if (id == null || id.isEmpty()) {
-            meal.setId(++count);
             dao.create(meal);
         } else {
             meal.setId(Integer.parseInt(id));

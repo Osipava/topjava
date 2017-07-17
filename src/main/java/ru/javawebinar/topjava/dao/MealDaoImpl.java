@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 public class MealDaoImpl implements MealDao {
 
-
     private List<Meal> meals = new CopyOnWriteArrayList<>();
 
     {
@@ -28,6 +27,7 @@ public class MealDaoImpl implements MealDao {
             meals.get(i - 1).setId(i);
     }
 
+    private final int count = meals.size() + 1;
     private List<MealWithExceed> mealWithExceeds;
 
     @Override
@@ -62,7 +62,7 @@ public class MealDaoImpl implements MealDao {
     @Override
     public void create(Meal meal) {
 
-
+        meal.setId(count);
         meals.add(meal);
         updateMealsWithExceeded();
 
