@@ -6,6 +6,6 @@
     <title>Insert title here</title>
 </head>
 <body>
-<jsp:forward page="/MealController?action=listMeal"/>
+<jsp:forward page="/meals?action=listMeal"/>
 </body>
 </html>

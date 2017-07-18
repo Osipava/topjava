@@ -4,18 +4,17 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealWithExceed;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MealDao {
-    Meal getMealById(int id);
+    Meal getById(int id);
 
-    List<MealWithExceed> getAllMealWithExceeds();
+    Map<Integer, Meal> getAll();
 
     void delete(int id);
 
     void edit(Meal meal);
 
     void create(Meal meal);
-
-    void updateMealsWithExceeded();
 
 }

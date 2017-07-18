@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -10,13 +11,12 @@
 <a href="index.jsp">Home</a>
 </br>
 
-<form method="POST" action='MealController' name="creatMeal">
+<form method="POST" action='meals' name="createMeal">
     <table>
         <th></th>
         <th></th>
         <tr>
-            <td> ID :</td>
-            <td><input type="text" readonly="readonly" name="id"
+            <td><input type="hidden" readonly="readonly" name="id"
                        value="${meal.id}"/> <br/></td>
         </tr>
         <tr>
