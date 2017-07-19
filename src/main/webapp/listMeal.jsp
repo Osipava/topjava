@@ -31,6 +31,7 @@
         </tr>
     </c:forEach>
 </table>
+
 <p><a href="meals?action=insert">Add Meal</a></p>
 </body>
 </html>
