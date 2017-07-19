@@ -14,15 +14,11 @@ public class MealDaoImpl implements MealDao {
     private Map<Integer, Meal> meals = new ConcurrentHashMap<>();
 
 
-    private AtomicInteger count;
+    private AtomicInteger count = new AtomicInteger(0);
 
     @Override
     public Meal getById(int id) {
-        for (Integer i : meals.keySet())
-            if (i == id) {
-                return meals.get(i);
-            }
-        return null;
+        return meals.get(id);
     }
 
     @Override
@@ -37,15 +33,14 @@ public class MealDaoImpl implements MealDao {
 
     @Override
     public void edit(Meal meal) {
-        meals.remove(meal.getId());
-        meals.put(meal.getId(), meal);
+
+        meals.replace(meal.getId(), meal);
 
     }
 
     @Override
     public void create(Meal meal) {
-        count = new AtomicInteger(meals.size());
-            meal.setId(count.get());
+        meal.setId(count.decrementAndGet());
         meals.put(meal.getId(), meal);
 
 
