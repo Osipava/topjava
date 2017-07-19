@@ -64,7 +64,7 @@ public class MealsUtil {
         return new MealWithExceed(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), exceeded);
     }
 
-    public List<MealWithExceed> allMealsWithExceeded(Map<Integer, Meal> mealMap) {
+    public static List<MealWithExceed> allMealsWithExceeded(Map<Integer, Meal> mealMap) {
         int caloriesPerDay = 2000;
         List<Meal> listMeal = mealMap.entrySet().stream()
                 .map(e -> e.getValue())

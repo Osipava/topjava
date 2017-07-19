@@ -21,7 +21,6 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class MealServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private MealDao dao;
-    private MealsUtil mealsUtil = new MealsUtil();
     private static final Logger LOG = getLogger(MealServlet.class);
 
     public void init(ServletConfig config) throws ServletException {
@@ -36,7 +35,7 @@ public class MealServlet extends HttpServlet {
         LOG.debug("redirect to listMeal");
 
         if (action == null) {
-            request.setAttribute("meals", mealsUtil.allMealsWithExceeded(dao.getAll()));
+            request.setAttribute("meals", MealsUtil.allMealsWithExceeded(dao.getAll()));
             RequestDispatcher view = request.getRequestDispatcher("/listMeal.jsp");
             view.forward(request, response);
 
@@ -53,7 +52,7 @@ public class MealServlet extends HttpServlet {
             view.forward(request, response);
 
         } else if (action.equalsIgnoreCase("listMeal")) {
-            request.setAttribute("meals", mealsUtil.allMealsWithExceeded(dao.getAll()));
+            request.setAttribute("meals", MealsUtil.allMealsWithExceeded(dao.getAll()));
             RequestDispatcher view = request.getRequestDispatcher("/listMeal.jsp");
             view.forward(request, response);
         } else {
@@ -77,8 +76,6 @@ public class MealServlet extends HttpServlet {
             dao.edit(mea);
         }
 
-        request.setAttribute("meals", mealsUtil.allMealsWithExceeded(dao.getAll()));
-        RequestDispatcher view = request.getRequestDispatcher("/listMeal.jsp");
-        view.forward(request, response);
+        response.sendRedirect("meals");
     }
 }
