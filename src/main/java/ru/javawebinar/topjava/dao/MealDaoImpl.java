@@ -6,6 +6,7 @@ import ru.javawebinar.topjava.model.Meal;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class MealDaoImpl implements MealDao {
@@ -13,7 +14,7 @@ public class MealDaoImpl implements MealDao {
     private Map<Integer, Meal> meals = new ConcurrentHashMap<>();
 
 
-    private int count = meals.size();
+    private AtomicInteger count;
 
     @Override
     public Meal getById(int id) {
@@ -43,9 +44,8 @@ public class MealDaoImpl implements MealDao {
 
     @Override
     public void create(Meal meal) {
-        synchronized (meal) {
-            meal.setId(++count);
-        }
+        count = new AtomicInteger(meals.size());
+            meal.setId(count.get());
         meals.put(meal.getId(), meal);
 
 
