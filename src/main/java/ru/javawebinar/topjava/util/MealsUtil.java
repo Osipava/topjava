@@ -72,7 +72,7 @@ public class MealsUtil {
 
                         Collectors.toMap(Meal::getDate, Meal::getCalories, Integer::sum)
                 );
-        
+
         return mealMap.values().stream()
                 .map(meal -> createWithExceed(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay))
                 .collect(Collectors.toList());
