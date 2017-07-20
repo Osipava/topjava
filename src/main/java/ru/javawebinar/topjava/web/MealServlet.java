@@ -51,10 +51,6 @@ public class MealServlet extends HttpServlet {
             RequestDispatcher view = request.getRequestDispatcher("/editMeal.jsp");
             view.forward(request, response);
 
-        } else if (action.equalsIgnoreCase("listMeal")) {
-            request.setAttribute("meals", MealsUtil.allMealsWithExceeded(dao.getAll()));
-            RequestDispatcher view = request.getRequestDispatcher("/listMeal.jsp");
-            view.forward(request, response);
         } else {
             RequestDispatcher view = request.getRequestDispatcher("/editMeal.jsp");
             view.forward(request, response);

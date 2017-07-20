@@ -66,15 +66,14 @@ public class MealsUtil {
 
     public static List<MealWithExceed> allMealsWithExceeded(Map<Integer, Meal> mealMap) {
         int caloriesPerDay = 2000;
-        List<Meal> listMeal = mealMap.entrySet().stream()
-                .map(e -> e.getValue())
-                .collect(Collectors.toList());
-        Map<LocalDate, Integer> caloriesSumByDate = listMeal.stream()
+
+        Map<LocalDate, Integer> caloriesSumByDate = mealMap.values().stream()
                 .collect(
 
                         Collectors.toMap(Meal::getDate, Meal::getCalories, Integer::sum)
                 );
-        return listMeal.stream()
+        
+        return mealMap.values().stream()
                 .map(meal -> createWithExceed(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay))
                 .collect(Collectors.toList());
     }

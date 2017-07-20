@@ -40,7 +40,7 @@ public class MealDaoImpl implements MealDao {
 
     @Override
     public void create(Meal meal) {
-        meal.setId(count.decrementAndGet());
+        meal.setId(count.incrementAndGet());
         meals.put(meal.getId(), meal);
 
 

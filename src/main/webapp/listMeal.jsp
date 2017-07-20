@@ -22,7 +22,7 @@
 
     <c:forEach var="meal" items="${meals}">
         <tr style="color: ${meal.exceed ? 'red' : 'green'}">
-            <td>${f:formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy')}</td>
+            <td>${f:formatLocalDateTime(meal.dateTime, 'dd.MM.yyyy hh:mm')}</td>
             <td>${meal.description}</td>
             <td>${meal.calories}</td>
             <td><a href="meals?action=delete&id=${meal.id}">Delete</a></td>
