@@ -22,7 +22,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.MEALS.forEach(meal -> save(meal,1));
+        MealsUtil.MEALS.forEach(meal -> save(meal, 1));
     }
 
     @Override
@@ -32,7 +32,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
             meal.setId(counter.incrementAndGet());
             meal.setUserId(userId);
         }
-        if(meal.getUserId() != null && meal.getUserId() == userId) {
+        if (meal.getUserId() != null && meal.getUserId() == userId) {
             repository.put(meal.getId(), meal);
             return meal;
         }
@@ -41,15 +41,15 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public void delete(int userId, int mealId) {
-        if(repository.get(mealId).getUserId() != null && repository.get(mealId).getUserId() == userId)
-        repository.remove(mealId);
+        if (repository.get(mealId).getUserId() != null && repository.get(mealId).getUserId() == userId)
+            repository.remove(mealId);
         else throw new NotFoundException("Еда отсутствует или принадлежит другому пользователю");
     }
 
     @Override
     public Meal get(int userId, int mealId) {
-        if(repository.get(mealId).getUserId() != null && repository.get(mealId).getUserId() == userId)
-        return repository.get(mealId);
+        if (repository.get(mealId).getUserId() != null && repository.get(mealId).getUserId() == userId)
+            return repository.get(mealId);
         return null;
     }
 
@@ -69,5 +69,5 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     }
 
-  }
+}
 

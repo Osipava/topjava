@@ -4,12 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.repository.mock.InMemoryMealRepositoryImpl;
 import ru.javawebinar.topjava.util.DateTimeUtil;
-import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletConfig;
@@ -20,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
@@ -70,12 +66,12 @@ public class MealServlet extends HttpServlet {
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/meal.jsp").forward(request, response);
                 break;
-            case  "getFilterDate":
+            case "getFilterDate":
                 log.info("getFilterDate");
                 mealRestController.getFilterDate(LocalDate.parse(request.getParameter("startDate")), LocalDate.parse(request.getParameter("endDate")));
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
-            case  "getFilterTime":
+            case "getFilterTime":
                 log.info("getFilterTime");
                 mealRestController.getFilterTime(DateTimeUtil.toLocalTime(request.getParameter("startTime")), DateTimeUtil.toLocalTime(request.getParameter("endTime")));
 

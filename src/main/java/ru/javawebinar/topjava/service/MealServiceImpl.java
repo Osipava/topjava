@@ -54,9 +54,10 @@ public class MealServiceImpl implements MealService {
             throw new NotFoundException("Еда отсутствует или принадлежит другому пользователю");
         }
     }
+
     @Override
     public Collection<Meal> getFilterDate(LocalDate startDate, LocalDate endDate) {
-       return repository.getFilterDate(startDate, endDate);
+        return repository.getFilterDate(startDate, endDate);
     }
 
 }

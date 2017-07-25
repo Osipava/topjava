@@ -51,7 +51,7 @@ public class MealRestController {
 
     public Meal create(Meal meal) {
         log.info("create {}", meal);
-            return service.save(meal, AuthorizedUser.id());
+        return service.save(meal, AuthorizedUser.id());
     }
 
     public void delete(int mealId) {
