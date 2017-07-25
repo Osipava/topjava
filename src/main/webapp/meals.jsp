@@ -31,7 +31,18 @@
             <dd><input type="date" name="endDate"></dd>
         </dl>
 
-        <input type="button" value="Фильтровать" onclick="location.href='meals?action=getFilterDate';"/>
+        <input type="button" value="Фильтровать по дате" onclick="location.href='meals?action=getFilterDate';"/>
+        <dl>
+            <dt>От времени:</dt>
+            <dd><input type="time" name="startTime"></dd>
+        </dl>
+        <dl>
+            <dt>До времени:</dt>
+            <dd><input type="time" name="endTime"></dd>
+        </dl>
+
+        <input type="button" value="Фильтровать по времени" onclick="location.href='meals?action=getFilterTime';"/>
+
 
     </form>
     <table border="1" cellpadding="8" cellspacing="0">
