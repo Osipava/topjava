@@ -43,9 +43,6 @@ public class MealRestController {
     public Meal get(int mealId) {
         log.info("get {}", mealId);
         Meal meal = service.get(AuthorizedUser.id(), mealId);
-        if (meal.getUserId() == null || meal.getUserId() != AuthorizedUser.id())
-            throw new NotFoundException("Еда отсутствует или принадлежит другому пользователю");
-        else
             return meal;
     }
 
@@ -57,21 +54,13 @@ public class MealRestController {
     public void delete(int mealId) {
         log.info("delete {}", mealId);
         Meal meal = service.get(AuthorizedUser.id(), mealId);
-        if (meal.getUserId() == null || meal.getUserId() != AuthorizedUser.id())
-            throw new NotFoundException("Еда отсутствует или принадлежит другому пользователю");
-        else
             service.delete(AuthorizedUser.id(), mealId);
     }
 
     public void update(Meal meal, int mealId) {
         log.info("update {} with id={}", meal, mealId);
-        if (meal.getUserId() == null || meal.getUserId() != AuthorizedUser.id())
-            throw new NotFoundException("Еда отсутствует или принадлежит другому пользователю");
-        else {
             checkIdConsistent(meal, mealId);
             service.update(meal, AuthorizedUser.id());
         }
     }
 
-
-}

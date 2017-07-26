@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
@@ -42,6 +43,7 @@ public class MealServlet extends HttpServlet {
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.valueOf(request.getParameter("calories")));
+        meal.setUserId(AuthorizedUser.id());
 
         log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
         mealRestController.create(meal);
@@ -67,15 +69,10 @@ public class MealServlet extends HttpServlet {
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/meal.jsp").forward(request, response);
                 break;
-            case "getFilterDate":
-                log.info("getFilterDate");
-                mealRestController.getFilterDate(LocalDate.parse(request.getParameter("startDate")), LocalDate.parse(request.getParameter("endDate")));
-                request.getRequestDispatcher("/meals.jsp").forward(request, response);
-                break;
-            case "getFilterTime":
-                log.info("getFilterTime");
-                mealRestController.getFilterTime(DateTimeUtil.toLocalTime(request.getParameter("startTime")), DateTimeUtil.toLocalTime(request.getParameter("endTime")));
-
+            case "getFilter":
+                log.info("getFilter");
+                request.setAttribute("meals", mealRestController.getFilterDate(LocalDate.parse(request.getParameter("startDate")), LocalDate.parse(request.getParameter("endDate"))));
+                //mealRestController.getFilterTime(DateTimeUtil.toLocalTime(request.getParameter("startTime")), DateTimeUtil.toLocalTime(request.getParameter("endTime")));
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
             case "all":

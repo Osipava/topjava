@@ -8,6 +8,8 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
+import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 
 @Service
 public class MealServiceImpl implements MealService {
@@ -18,27 +20,19 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public Meal save(Meal meal, int userId) {
-        Meal meal1 = repository.save(meal, userId);
-        if (meal1 == null)
-            throw new NotFoundException("Еда отсутствует или принадлежит другому пользователю");
-        return meal1;
-    }
-
-    @Override
-    public void delete(int userId, int mealId) {
-
-        repository.delete(userId, mealId);
-
+        return repository.save(meal, userId);
 
     }
 
     @Override
-    public Meal get(int userId, int mealId) {
-        Meal meal = repository.get(userId, mealId);
-        if (meal == null)
-            throw new NotFoundException("Еда отсутствует или принадлежит другому пользователю");
+    public void delete(int userId, int mealId) throws NotFoundException {
+        checkNotFoundWithId(repository.delete(userId, mealId), mealId);
+    }
 
-        return meal;
+    @Override
+    public Meal get(int userId, int mealId) throws NotFoundException {
+
+        return checkNotFoundWithId(repository.get(userId, mealId), mealId);
     }
 
     @Override
@@ -48,11 +42,9 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public void update(Meal meal, int userId) {
-        try {
-            repository.save(meal, userId);
-        } catch (NullPointerException e) {
-            throw new NotFoundException("Еда отсутствует или принадлежит другому пользователю");
-        }
+
+        repository.save(meal, userId);
+
     }
 
     @Override
